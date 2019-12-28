@@ -1,0 +1,161 @@
+
+// // chưa biết nên đặt tên như thế nào
+// $(document).ready(function() {
+//     var first_position = $("ul.list-slide li:first-child").index()+1;
+//     var last_position = $("ul.list-slide li:last-child").index()+1;
+//     $('.btn-slide-show .btn-next').click(function() {
+//         console.log(first_position);
+//         console.log(last_position);
+//         for( var i = first_position ; i < last_position ; i++ ) {
+//             $("ul.list-slide li:nth-child("+(i)+")").addClass('lost-on-left');
+//             $("ul.list-slide li:nth-child("+(i)+")").removeClass('opacity');
+//         } 
+//     });
+//     for (var i = 10 ; i <= last_position ; i++) {
+//         $("ul.list-slide li:nth-child("+(i)+")").addClass('opacity');
+//     }
+//     $(".btn-slide-show .btn-prev").click(function(){
+//         console.log(first_position);
+//         console.log(last_position);
+//         for( var i = last_position ; i >= first_position ; i-- ) {
+//             $("ul.list-slide li:nth-child("+(i)+")").addClass('lost-on-right').one('webkitAnimationEnd',function() {
+//                 // $('.lost-on-right').removeClass('lost-on-right');
+//             });
+//             if( i >= 10) {
+//                 $("ul.list-slide li:nth-child("+(i)+")").addClass('opacity');
+//             }
+//         }
+            
+//     });
+// });
+
+
+---------------------------------------------------
+
+$(document).ready(function() {
+    var firstImg = $(".slide:first").index(); // = 0 
+    var lastImg = $(".slide:last").index(); // = 10
+    var vt = 0;
+    var position_current = $(".active-li").index()+1;
+    var position_current_first = $("ul.list-slide li:first-child").index()+1;
+    var position_current_last = $("ul.list-slide li:last-child").index()+1;
+    $(".btn-slide .btn-next").click(function() {
+        if( vt == lastImg ) {
+            vt = firstImg - 1;
+        }
+        vt ++ ;
+        $(".slide").stop().fadeOut(500).removeClass('active');
+        $(".slide").eq(vt).stop().fadeIn(1000).addClass('active');
+        // --------------------------------
+        // xử lí active cho li next
+        if( position_current < position_current_last ) {
+            $("ul.list-slide li").removeClass('active-li');
+            $("ul.list-slide li:nth-child("+(position_current + 1)+")").addClass('active-li');
+            position_current ++ ;
+        }
+        else {
+            position_current = position_current_first;
+            $("ul.list-slide li").removeClass('active-li').removeClass('active');
+            $("ul.list-slide li:first-child").addClass('active-li').addClass('active');
+        }
+        // --------------------------------
+    });
+    $(".btn-slide .btn-prev").click(function() {
+        if( vt == firstImg ) {
+            vt = lastImg + 1;
+        }
+        vt -- ;
+        $(".slide").stop().fadeOut(500).removeClass('active');;
+        $(".slide").eq(vt).stop().fadeIn(1000).addClass('active');
+        // --------------------------------
+        // xử lí active cho li prev
+        if(position_current > position_current_first) {
+            $("ul.list-slide li").removeClass('active-li');
+            $("ul.list-slide li:nth-child("+(position_current-1)+")").addClass('active-li');
+            position_current -- ;
+        }
+        else {
+            position_current = position_current_last;
+            $("ul.list-slide li").removeClass('active-li').removeClass('active');
+            $("ul.list-slide li:last-child").addClass('active-li').addClass('active');
+        }
+        // --------------------------------
+    });
+});
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+    $(".auto-next").click(function() {
+        setInterval(function() {
+            $(".btn-slide .btn-next").click();
+        },2000)
+        $(this).stop().fadeOut(500);
+    })
+});
+
+
+
+
+
+// xử lí click chuyển danh sách ảnh
+$(document).ready(function() {
+    $(".btn-slide-show span.btn-next").click(function() {
+        var slide_after = $(".active-ul").next();
+        if( slide_after.length != 0) {
+            $(".active-ul").addClass('lost-on-left').one('webkitAnimationEnd',function() {
+                $(".lost-on-left").removeClass('lost-on-left').removeClass('active-ul');
+            });
+            slide_after.addClass('active-ul').addClass('go-to-left').one('webkitAnimationEnd',function() {
+                $('.go-to-left').removeClass('go-to-left');
+            });
+        }
+        else {
+            $(".active-ul").addClass('lost-on-left').one('webkitAnimationEnd',function() {
+                $(".lost-on-left").removeClass('lost-on-left').removeClass('active-ul');
+            });
+            $(".list-slide-show ul.list-slide:first").addClass('active-ul').addClass('go-to-left').one('webkitAnimationEnd',function() {
+                $('.go-to-left').removeClass('go-to-left');
+            });
+        }
+    });
+    $(".btn-slide-show span.btn-prev").click(function() {
+        var slide_before = $(".active-ul").prev();
+        if( slide_before.length != 0 ) {
+            $(".active-ul").addClass('lost-on-right').one('webkitAnimationEnd',function() {
+                $('.lost-on-right').removeClass('lost-on-right').removeClass('active-ul');
+            });
+            slide_before.addClass('active-ul').addClass('go-to-right').one('webkitAnimationEnd',function() {
+                $(".go-to-right").removeClass('go-to-right');
+            });
+        }
+        else {
+            $(".active-ul").addClass('lost-on-right').one('webkitAnimationEnd',function() {
+                $('.lost-on-right').removeClass('lost-on-right').removeClass('active-ul');
+            });
+            $(".list-slide-show ul.list-slide:last").addClass('active-ul').addClass('go-to-right').one('webkitAnimationEnd',function() {
+                $('.go-to-right').removeClass('go-to-right');
+            });
+        }
+    });
+});
+
+
+
+
+
+
+// $(document).ready(function() {
+//     $(".btn-slide-show span").click(function() {
+//         var first_ul = $(".list-slide-show ul.list-slide:first").next().index();
+//         console.log(first_ul);
+//         var last_ul = $(".list-slide-show ul.list-slide:last").index()+1;
+        
+//     })
+// });
+

@@ -1,0 +1,59 @@
+/*global float and clear*/
+.fl-left{
+	float: left;
+}
+.fl-right{
+	float: right;
+}
+/*global text*/
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
+.text-justify {
+	text-align: justify;
+}
+.text-uppercase {
+	text-transform: uppercase;
+}
+.text-lowercase {
+	text-transform: lowercase;
+}
+.text-capitalize {
+	text-transform: capitalize;
+}
+.text-underline {
+	text-decoration: underline;
+}
+.text-lineThough{
+	text-decoration: line-through;
+}
+.text-overline {
+	text-decoration: overline;
+}
+/*global font*/
+.font-italic {
+	font-style: italic;
+}
+.font-normal {
+	font-style: normal;
+}
+.font-oblique {
+	font-style: oblique;
+}
+/*global wrapper*/
+.wp-inner {
+	width: 1170px;
+	margin: 0px auto;
+}
+a {
+	display: block;
+}
+img {
+	display: block;
+}
